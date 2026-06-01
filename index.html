@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>White House: The Performed Normalcy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Noto+Serif+KR:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-black: #050505;
+            --gold: #8c7246;
+            --bone: #e3e0d5;
+            --jade: #88ada6;
+            --blood: #5e0000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        body { background: #000; color: var(--bone); font-family: 'Noto Serif KR', serif; overflow: hidden; }
+
+        /* [Main Layout] */
+        #game-container {
+            position: relative; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, transparent 20%, black 120%);
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+
+        #bg-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            z-index: -1; filter: brightness(0.6) contrast(1.2);
+            transition: 1s ease-in-out;
+        }
+
+        /* [Top: Stat Gauges] */
+        #top-hud { padding: 30px; display: flex; gap: 30px; z-index: 10; }
+        .gauge-box { width: 200px; height: 12px; background: #111; border: 1px solid var(--gold); position: relative; }
+        .gauge-bar { height: 100%; width: 100%; transition: 0.5s; }
+        .label { font-family: 'Cinzel'; font-size: 0.7rem; color: var(--gold); margin-bottom: 5px; display: block; }
+
+        /* [Right: Bag & Journal] */
+        #inventory-system {
+            position: absolute; right: 40px; top: 40px; bottom: 40px;
+            width: 320px; display: flex; flex-direction: column; gap: 20px; z-index: 100;
+        }
+
+        #bag-icon {
+            width: 70px; height: 70px; align-self: flex-end;
+            background: rgba(0,0,0,0.8); border: 2px solid var(--gold);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; transition: 0.3s;
+        }
+        #bag-icon:hover { transform: rotate(-5deg) scale(1.1); box-shadow: 0 0 20px var(--blood); }
+
+        #journal {
+            flex-grow: 1; background: #b8a68a; /* 양피지 */
+            border: 2px solid #4a3a2a; padding: 25px; color: #2e261d;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column;
+            transform-origin: right top; transition: 0.5s;
+        }
+
+        .journal-title { font-family: 'Cinzel'; border-bottom: 2px solid #4a3a2a; margin-bottom: 15px; padding-bottom: 5px; }
+        #inv-items { list-style: none; margin-bottom: 20px; font-weight: 500; font-size: 0.9rem; }
+        .item-line { cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.1); padding: 5px 0; }
+        .item-line:hover { color: var(--blood); }
+        #item-detail { font-size: 0.85rem; font-style: italic; line-height: 1.6; }
+
+        /* [Bottom: Dialogue & Choices] */
+        #bottom-hud {
+            width: 100%; padding: 50px; background: linear-gradient(to top, black 60%, transparent);
+            display: flex; flex-direction: column; align-items: center; z-index: 10;
+        }
+
+        #text-box { font-size: 1.3rem; margin-bottom: 40px; max-width: 900px; line-height: 1.8; text-align: center; height: 80px; }
+        .choice-list { display: flex; flex-direction: column; gap: 12px; width: 500px; }
+        .btn-choice {
+            background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold);
+            padding: 15px; font-family: 'Cinzel'; letter-spacing: 2px;
+            transition: 0.3s; text-align: left;
+        }
+        .btn-choice:hover { background: var(--gold); color: #000; padding-left: 35px; }
+
+        /* [Effects] */
+        .fade { animation: fadeIn 1.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <div id="bg-layer"></div>
+
+    <div id="top-hud">
+        <div><span class="label">REASON</span><div class="gauge-box"><div id="reason-bar" class="gauge-bar" style="background: var(--jade);"></div></div></div>
+        <div><span class="label">MYSTERY</span><div class="gauge-box"><div id="mystery-bar" class="gauge-bar" style="background: var(--blood); width: 10%;"></div></div></div>
+    </div>
+
+    <aside id="inventory-system">
+        <div id="bag-icon" onclick="toggleJournal()">💼</div>
+        <div id="journal">
+            <h2 class="journal-title">THE JOURNAL</h2>
+            <ul id="inv-items"><li>(가방이 비어있음)</li></ul>
+            <div id="item-detail">물건을 조사하면 여기에 기록됩니다.</div>
+        </div>
+    </aside>
+
+    <main id="bottom-hud">
+        <div id="text-box" class="fade"></div>
+        <div id="choice-area" class="choice-list"></div>
+    </main>
+</div>
+
+<script>
+    const items = {
+        'ring': { name: "Silver Ring", property: "Cold, Etched", desc: "아서의 주머니에서 발견된 반지. 안쪽에 '영원히 연기하라'는 문구가 새겨져 있다." },
+        'key': { name: "Rusty Key", property: "Oxidized Iron", desc: "지하실 냄새가 나는 열쇠. 박제된 시간의 문을 열 수 있을 것 같다." }
+    };
+
+    const state = {
+        reason: 100,
+        mystery: 10,
+        inventory: [],
+        currentScene: 'S1'
+    };
+
+    const story = {
+        'S1': {
+            bg: "https://images.unsplash.com/photo-1519074063912-ad2a602159d7?auto=format&fit=crop&q=80&w=1920",
+            text: "S1: 저택의 복도는 현대의 공기를 거부한다. 발치에 은색 반지 하나가 떨어져 있다.",
+            choices: [
+                { text: "반지를 가방에 넣는다", action: () => getItem('ring'), next: 'S3' },
+                { text: "무시하고 앞으로 나아간다", next: 'S3' }
+            ]
+        },
+        'S3': {
+            bg: "https://images.unsplash.com/photo-1533154683836-84ea7a0bc310?auto=format&fit=crop&q=80&w=1920",
+            text: "S3: 벽면에 일그러진 초상화가 걸려 있다. 스노우의 '정상성'이 뒤틀리기 시작한 지점이다.",
+            choices: [
+                { text: "초상화를 자세히 조사한다", action: () => updateStat('mystery', 20), next: 'S5' },
+                { text: "서둘러 자리를 피한다", action: () => updateStat('reason', -10), next: 'S5' }
+            ]
+        },
+        'S5': {
+            bg: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?auto=format&fit=crop&q=80&w=1920",
+            text: "S5: 갈림길이다. 위에서는 스노우의 웃음소리가, 아래에서는 썩은 비단 냄새가 난다.",
+            choices: [
+                { text: "위층 만찬장으로 간다 (S7)", next: 'S7' },
+                { text: "지하실 열쇠를 찾는다", condition: () => !state.inventory.includes('key'), action: () => getItem('key'), next: 'S5' }
+            ]
+        },
+        'S7': {
+            bg: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80&w=1920",
+            text: "S7: 만찬의 시간이다. 스노우가 검은 웨이브 머리를 찰랑이며 묻는다. \"아서, 당신도 박제되길 원하나요?\"",
+            choices: [
+                { text: "반지를 건네주며 진실을 묻는다", condition: () => state.inventory.includes('ring'), next: 'S10' },
+                { text: "침묵하며 그녀의 연기에 동참한다", next: 'S10' }
+            ]
+        },
+        'S10': {
+            bg: "
