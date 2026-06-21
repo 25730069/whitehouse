@@ -7,7 +7,16 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Georgia',serif}
 
-.scr{position:absolute;inset:0;display:none}
+/* ORNATE FRAME — outer gothic border around the whole game */
+#frame{position:fixed;inset:0;z-index:1000;pointer-events:none}
+#frame::before{content:'';position:absolute;inset:0;box-shadow:inset 0 0 0 24px #15100a,inset 0 0 0 25px #050302,inset 0 0 0 27px #4a3520,inset 0 0 0 28px #2a2018,inset 0 0 0 31px #050302}
+#frame .fc{position:absolute;width:56px;height:56px;font:400 26px/1 Georgia,serif;color:#7a6040;display:flex;align-items:center;justify-content:center;opacity:.9}
+#frame .fc-tl{top:0;left:0}
+#frame .fc-tr{top:0;right:0;transform:scaleX(-1)}
+#frame .fc-bl{bottom:0;left:0;transform:scaleY(-1)}
+#frame .fc-br{bottom:0;right:0;transform:scale(-1,-1)}
+
+.scr{position:absolute;inset:24px;display:none}
 .scr.on{display:flex;flex-direction:column;align-items:center;justify-content:center}
 
 /* OPENING */
@@ -16,142 +25,181 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
 #op-title.show{opacity:1}
 #op-menu{display:flex;flex-direction:column;align-items:center;background:#090705bb;border:1px solid #2a2018;padding:20px 60px;opacity:0;transition:opacity .8s .6s}
 #op-menu.show{opacity:1}
-.op-btn{font:400 11px/1 Georgia,serif;letter-spacing:.22em;color:#6a6560;cursor:pointer;padding:8px 0;text-transform:uppercase;transition:color .15s;text-align:center;width:100%}
+.op-btn{font:400 14px/1 Georgia,serif;letter-spacing:.22em;color:#8a8580;cursor:pointer;padding:10px 0;text-transform:uppercase;transition:color .15s;text-align:center;width:100%}
 .op-btn:hover{color:#d3cfc7}
 .op-div{width:100%;height:1px;background:#1a1610;margin:3px 0}
 
 /* PROLOGUE */
 #pro{background:#000;padding:60px 80px}
-#pro-txt{font:400 15px/2.2 Georgia,serif;letter-spacing:.04em;color:#a8a49c;max-width:660px;text-align:center;white-space:pre-wrap}
+#pro-txt{font:400 20px/2.2 Georgia,serif;letter-spacing:.04em;color:#a8a49c;max-width:780px;text-align:center;white-space:pre-wrap}
 #pro-cur{display:inline-block;width:2px;height:1em;background:#8a7570;vertical-align:middle;animation:blink .7s step-end infinite}
 @keyframes blink{50%{opacity:0}}
-#pro-skip{position:absolute;bottom:24px;right:28px;font:400 13px/1 Georgia,serif;letter-spacing:.12em;color:#6a6560;cursor:pointer;text-transform:uppercase}
-#pro-skip:hover{color:#a8a49c}
+#pro-skip{position:absolute;bottom:24px;right:28px;font:400 13px/1 Georgia,serif;letter-spacing:.12em;color:#4a4440;cursor:pointer;text-transform:uppercase}
+#pro-skip:hover{color:#c8c4bc}
 
 /* GAME */
-#gm{align-items:stretch;justify-content:flex-start;position:relative}
+#gm{align-items:stretch;justify-content:flex-start;position:absolute;inset:24px}
 
 /* HUD */
-#hud{flex:0 0 50px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:#040302;border-bottom:1px solid #161210;z-index:10;position:relative}
+#hud{flex:0 0 64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#040302;border-bottom:1px solid #161210;z-index:10;position:relative}
 .hl{display:flex;align-items:center;gap:6px}
-.hl-title{font:400 12px/1 Georgia,serif;letter-spacing:.15em;color:#8a7570;text-transform:uppercase}
-.hc{display:flex;gap:26px;align-items:center}
-.st{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;position:relative}
-.sl{font:400 8px/1 Georgia,serif;letter-spacing:.12em;text-transform:uppercase;color:#302820}
-.sb{width:88px;height:4px;background:#181410;border-radius:2px;overflow:hidden}
-.sf{height:100%;border-radius:2px;transition:width .5s}
-.fe{background:#9b2222}.fs{background:#b87020}.fv{background:#6b3a8a}
-.sv{font:400 10px/1 Georgia,serif;color:#4a4440}
-.tip{display:none;position:absolute;top:46px;left:50%;transform:translateX(-50%);background:#0c0a08;border:1px solid #2a2018;padding:10px 13px;width:176px;z-index:100;pointer-events:none}
+.hl-title{font:400 16px/1 Georgia,serif;letter-spacing:.15em;color:#8a7570;text-transform:uppercase}
+.hc{display:flex;gap:34px;align-items:center}
+.st{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;position:relative}
+.sl{font:400 11px/1 Georgia,serif;letter-spacing:.12em;text-transform:uppercase;color:#4a4440}
+.sb{width:110px;height:7px;background:#181410;border-radius:3px;overflow:hidden}
+.sf{height:100%;border-radius:3px;transition:width .5s}
+.fe{background:#e4e0d8}.fs{background:#e4e0d8}.fv{background:#e4e0d8}
+.sv{font:700 16px/1 Georgia,serif;color:#f4f2ee}
+.tip{display:none;position:absolute;top:54px;left:50%;transform:translateX(-50%);background:#0c0a08;border:1px solid #2a2018;padding:12px 15px;width:210px;z-index:100;pointer-events:none}
 .st:hover .tip{display:block}
-.tn{font:400 11px/1 Georgia,serif;color:#c8c4bc;margin-bottom:4px}
-.td{font:400 9px/1.6 Georgia,serif;color:#4a4440}
+.tn{font:400 13px/1 Georgia,serif;color:#c8c4bc;margin-bottom:5px}
+.td{font:400 11px/1.6 Georgia,serif;color:#6a6560}
 .hr{display:flex;align-items:center}
-#ib{display:flex;align-items:center;gap:5px;padding:5px 11px;background:#0c0a08;border:1px solid #1e1a14;cursor:pointer}
+#ib{display:flex;align-items:center;gap:7px;padding:7px 14px;background:#0c0a08;border:1px solid #1e1a14;cursor:pointer}
 #ib:hover{background:#181410}
-.dots{display:flex;gap:3px}
-.dot{width:6px;height:6px;background:#201a14}
+.dots{display:flex;gap:4px}
+.dot{width:7px;height:7px;background:#201a14}
 .dot.on{background:#8a2020}
-#il{font:400 10px/1 Georgia,serif;color:#4a4440;letter-spacing:.07em}
-#ic{font:500 10px/1 Georgia,serif;color:#9b2222}
+#il{font:400 12px/1 Georgia,serif;color:#6a6560;letter-spacing:.07em}
+#ic{font:700 13px/1 Georgia,serif;color:#9b2222}
 
-/* SCENE — 70vh, video contain so it doesn't fill 100% */
-#sc{flex:0 0 70vh;position:relative;overflow:hidden;background:#0a0806}
-#sc-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none}
-#sc-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none}
+/* SCENE */
+#sc{flex:0 0 54vh;position:relative;overflow:hidden;background:#0a0806}
+#sc-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:none;transition:filter .6s ease}
 
-/* PORTRAIT — absolute overlay */
-#port{position:absolute;bottom:0;left:0;width:clamp(220px,34vw,400px);height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;z-index:3;pointer-events:none;opacity:0;transition:opacity .35s}
-#port.show{opacity:1}
-#port-img{width:100%;max-height:100%;object-fit:cover;object-position:top}
-#port-nm{width:100%;background:#040302ee;text-align:center;padding:5px 0;font:400 10px/1 Georgia,serif;color:#6a6560;letter-spacing:.09em;border-top:1px solid #161210}
+/* AMBIENCE — vignette, grain, flicker, always on */
+#sc-vignette{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at center,transparent 38%,rgba(0,0,0,.55) 100%);mix-blend-mode:multiply}
+#sc-flicker{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at center,rgba(255,200,140,.05) 0%,transparent 60%);animation:candleFlicker 4.5s ease-in-out infinite}
+@keyframes candleFlicker{0%,100%{opacity:.6}18%{opacity:.3}32%{opacity:.75}45%{opacity:.4}60%{opacity:.65}74%{opacity:.35}88%{opacity:.7}}
+#sc-grain{position:absolute;inset:-50%;width:200%;height:200%;z-index:6;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");animation:grainShift .5s steps(2) infinite}
+@keyframes grainShift{0%{transform:translate(0,0)}50%{transform:translate(-2%,1%)}100%{transform:translate(1%,-2%)}}
+
+/* SUSPICION GLOW — intensity scales with --sus (0-100) via inline style */
+#sc-susglow{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(180,20,20,var(--sus-a,0)) 100%);transition:background .8s ease}
+#sc.sus-shake{animation:susShake .35s ease-in-out infinite}
+@keyframes susShake{0%,100%{transform:translate(0,0)}25%{transform:translate(-1.5px,1px)}50%{transform:translate(1.5px,-1px)}75%{transform:translate(-1px,-1.5px)}}
+
+/* EGO COLLAPSE — dark vignette closes in + unstable tremor, scales with low ego */
+#sc-egovig{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse at center,transparent var(--ego-r,70%),rgba(0,0,0,var(--ego-a,0)) 100%);transition:background .9s ease}
+#sc.ego-tremor{animation:egoTremor 2.6s ease-in-out infinite}
+#sc.ego-tremor-crit{animation:egoTremorCrit 1.4s ease-in-out infinite}
+@keyframes egoTremor{0%,100%{transform:translate(0,0)}30%{transform:translate(-1px,.5px)}55%{transform:translate(1px,-.5px)}80%{transform:translate(-.5px,1px)}}
+@keyframes egoTremorCrit{0%,100%{transform:translate(0,0)}20%{transform:translate(-3px,1.5px)}40%{transform:translate(2.5px,-2px)}60%{transform:translate(-2px,-1.5px)}80%{transform:translate(3px,1px)}}
+
+/* PORTRAIT — left/right of the background scene image, dim when not speaking */
+.port-l,.port-r{position:absolute;bottom:0;width:clamp(160px,22vw,300px);height:90%;z-index:2;display:flex;align-items:flex-end;pointer-events:none;opacity:0;filter:brightness(.4) saturate(.75);transition:opacity .4s,filter .4s,left .4s,right .4s;}
+.port-l{left:18%;justify-content:center}
+.port-r{right:18%;justify-content:center}
+.port-l.show,.port-r.show{opacity:1}
+.port-l.speaking,.port-r.speaking{filter:brightness(1) saturate(1)}
+#port-img,#port-img2{width:100%;height:100%;object-fit:cover;object-position:top;-webkit-mask-image:linear-gradient(to bottom,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 90%,transparent 100%)}
+.port-l #port-img{-webkit-mask-image:linear-gradient(to bottom,#000 90%,transparent 100%),linear-gradient(to right,transparent 0%,#000 8%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 90%,transparent 100%),linear-gradient(to right,transparent 0%,#000 8%);mask-composite:intersect}
+.port-r #port-img2{-webkit-mask-image:linear-gradient(to bottom,#000 90%,transparent 100%),linear-gradient(to left,transparent 0%,#000 8%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,#000 90%,transparent 100%),linear-gradient(to left,transparent 0%,#000 8%);mask-composite:intersect}
 
 /* CHOICE PANEL */
-#cp{position:absolute;top:0;right:0;width:clamp(240px,30vw,310px);height:100%;display:flex;flex-direction:column;z-index:4;background:linear-gradient(to left,#040302f5 50%,transparent);padding:14px 13px 12px;pointer-events:none;opacity:.08;transition:opacity .3s}
+#cp{position:absolute;top:0;right:0;width:clamp(250px,30vw,340px);height:100%;display:flex;flex-direction:column;z-index:8;background:linear-gradient(to left,#040302f5 55%,transparent);padding:18px 24px 18px 18px;pointer-events:none;opacity:.08;transition:opacity .3s}
 #cp.on{opacity:1;pointer-events:all}
-#cp-hdr{font:400 9px/1 Georgia,serif;letter-spacing:.2em;text-transform:uppercase;color:#2a2018;text-align:center;margin-bottom:10px}
-#pv{flex:0 0 168px;background:#06040299;border:1px solid #1e1a14;padding:9px 11px;margin-bottom:10px;overflow:hidden}
-#pv-ttl{font:400 9px/1 Georgia,serif;letter-spacing:.14em;text-transform:uppercase;color:#2a2018;text-align:center;margin-bottom:8px}
-.pr{display:flex;align-items:center;margin-bottom:5px}
-.pn{font:400 9px/1 Georgia,serif;color:#4a4440;min-width:58px}
-.pa{font-size:11px;color:#3a2818;margin:0 4px}
-.pc{font:500 10px/1 Georgia,serif}
-.pc.pos{color:#9b2222}.pc.neg{color:#8a6020}.pc.zer{color:#302820}
-.pd{font:400 9px/1.55 Georgia,serif;color:#3a3028;border-top:1px solid #1a1410;padding-top:5px;margin-top:4px}
-#cw{flex:1;display:flex;flex-direction:column;gap:6px;overflow:hidden}
-.cb{background:#06040299;border:1px solid #1a1610;padding:11px 12px;cursor:pointer;position:relative;flex-shrink:0;transition:background .12s,border-color .12s}
+#cp-hdr{font:400 12px/1 Georgia,serif;letter-spacing:.2em;text-transform:uppercase;color:#6a6560;text-align:center;margin-bottom:12px}
+#cw{flex:1;display:flex;flex-direction:column;gap:7px;overflow:hidden}
+.cb{background:#06040299;border:1px solid #1a1610;padding:13px 14px;cursor:pointer;position:relative;flex-shrink:0;transition:background .12s,border-color .12s}
 .cb::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:#3a2818;opacity:0;transition:opacity .15s}
 .cb:hover{background:#0e0a08cc;border-color:#3a2818}.cb:hover::before{opacity:1}
 .cb.sel{border-color:#8a2020}.cb.sel::before{background:#8a2020;opacity:1}
-.cb-r{display:flex;align-items:flex-start;gap:8px}
-.ck{font:italic 11px/1.2 Georgia,serif;color:#8a2020;letter-spacing:.09em;flex-shrink:0;margin-top:1px}
-.ct{font:400 12px/1.5 Georgia,serif;color:#a8a49c}
+.cb-r{display:flex;align-items:flex-start;gap:9px}
+.ck{font:italic 14px/1.2 Georgia,serif;color:#c23838;letter-spacing:.09em;flex-shrink:0;margin-top:1px}
+.ct{font:400 15px/1.5 Georgia,serif;color:#c8c4bc}
+.cb.locked{opacity:.4;cursor:not-allowed}
+.cb.locked:hover{background:#06040299;border-color:#1a1610}
+.cb.locked:hover::before{opacity:0}
+.cb-lock{font:italic 12px/1 Georgia,serif;color:#5a5450}
 
-/* DIALOGUE */
-#dlg{flex:0 0 82px;background:#040302;border-top:1px solid #0e0c0a;padding:10px 22px;cursor:pointer;position:relative;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-#dlg-sp{display:none;font:italic 10px/1 Georgia,serif;color:#8a7570;letter-spacing:.12em;margin-bottom:6px}
-#dlg-sp.show{display:block}
-#dlg-tx{font:400 13px/1.7 Georgia,serif;color:#c8c4bc;padding-right:28px}
-#dlg-ar{position:absolute;right:18px;bottom:10px;font-size:12px;color:#2a2018;transition:color .3s}
+/* DIALOGUE — taller box, portrait + scrollable accumulating log */
+#dlg{flex:1 1 auto;min-height:0;background:#040302;border-top:1px solid #0e0c0a;cursor:pointer;position:relative;display:flex;align-items:stretch;overflow:hidden}
+#dlg-log{flex:1 1 auto;min-width:0;padding:16px 60px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer;user-select:none;-webkit-user-select:none;text-align:center}
+#dlg-log::-webkit-scrollbar{width:8px}
+#dlg-log::-webkit-scrollbar-track{background:transparent}
+#dlg-log::-webkit-scrollbar-thumb{background:#241c16;border-radius:4px}
+.dl-line{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;user-select:none;-webkit-user-select:none;text-align:center}
+.dl-sp{font:italic 600 14px/1 Georgia,serif;color:#b08a78;letter-spacing:.1em;cursor:pointer}
+.dl-tx{font:400 19px/1.65 Georgia,serif;color:#e4e0d8;cursor:pointer}
+.dl-line.narr .dl-tx{color:#a8a49c;font-style:italic}
+#dlg-ar{position:absolute;right:18px;bottom:14px;font-size:16px;color:#a8a49c;transition:color .3s;background:#040302cc;padding:2px 4px;border-radius:3px;animation:arPulse 1.4s ease-in-out infinite}
+@keyframes arPulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* STAT OVERLAY — at gm level */
 #sov{position:absolute;inset:0;background:#000c;display:flex;align-items:center;justify-content:center;z-index:30;opacity:0;pointer-events:none;transition:opacity .3s}
 #sov.on{opacity:1;pointer-events:all}
-#scard{border:1px solid #3a2818;padding:28px 46px;display:flex;flex-direction:column;align-items:center;gap:16px;min-width:250px;background:#080604cc;position:relative}
-#scard::before{content:'❧';position:absolute;top:8px;left:50%;transform:translateX(-50%);color:#3a2818;font-size:16px}
-#scard::after{content:'❧';position:absolute;bottom:8px;left:50%;transform:translateX(-50%) rotate(180deg);color:#3a2818;font-size:16px}
-.s-ttl{font:400 10px/1 Georgia,serif;letter-spacing:.2em;text-transform:uppercase;color:#6a6560}
-.s-div{width:130px;height:1px;background:linear-gradient(to right,transparent,#3a2818,transparent)}
-.s-row{display:flex;align-items:center;gap:10px;width:100%}
-.s-ic{font-size:12px;color:#8a2020;min-width:14px;text-align:center}
-.s-nm{font:400 12px/1 Georgia,serif;color:#6a6560;flex:1}
-.s-ch{font:italic 500 14px/1 Georgia,serif}
-.s-ch.pos{color:#9b2222}.s-ch.neg{color:#8a6020}.s-ch.zer{color:#2a2018}
-.s-nt{font:400 9px/1 Georgia,serif;letter-spacing:.1em;color:#302820;margin-top:4px}
+#scard{border:1px solid #3a2818;padding:34px 56px;display:flex;flex-direction:column;align-items:center;gap:20px;min-width:300px;max-width:560px;background:#080604cc;position:relative}
+#sresult{font:400 14px/1.7 Georgia,serif;color:#c8c4bc;text-align:center;border-top:1px solid #2a2018;padding-top:16px;width:100%}
+#sresult:empty{display:none}
+#sitem{display:flex;flex-direction:column;gap:10px;width:100%}
+.sit-row{display:flex;align-items:center;gap:14px;background:#120e0a;border:1px solid #3a2818;padding:10px 16px}
+.sit-img{width:44px;height:44px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 4px #00000080)}
+.sit-tx{display:flex;flex-direction:column;gap:2px}
+.sit-lbl{font:400 10px/1 Georgia,serif;letter-spacing:.15em;color:#8a6020;text-transform:uppercase}
+.sit-nm{font:400 16px/1 Georgia,serif;color:#e4e0d8}
+#scard::before{content:'❧';position:absolute;top:8px;left:50%;transform:translateX(-50%);color:#3a2818;font-size:18px}
+#scard::after{content:'❧';position:absolute;bottom:8px;left:50%;transform:translateX(-50%) rotate(180deg);color:#3a2818;font-size:18px}
+.s-ttl{font:400 13px/1 Georgia,serif;letter-spacing:.2em;text-transform:uppercase;color:#8a8580}
+.s-div{width:150px;height:1px;background:linear-gradient(to right,transparent,#3a2818,transparent)}
+.s-row{display:flex;align-items:center;gap:12px;width:100%}
+.s-ic{font-size:16px;color:#a8a49c;min-width:18px;text-align:center}
+.s-nm{font:400 16px/1 Georgia,serif;color:#a8a49c;flex:1}
+.s-ch{font:italic 700 22px/1 Georgia,serif}
+.s-ch.pos{color:#f4f2ee}.s-ch.neg{color:#f4f2ee}.s-ch.zer{color:#8a8580}
+.s-nt{font:400 12px/1 Georgia,serif;letter-spacing:.1em;color:#5a5450;margin-top:6px}
 
 /* INVENTORY */
 #inv{position:absolute;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;z-index:20;opacity:0;pointer-events:none;transition:opacity .2s}
 #inv.on{opacity:1;pointer-events:all}
-#imod{background:#0c0a08;border:1px solid #2a2018;width:min(430px,90vw);max-height:90vh;display:flex;flex-direction:column}
-#imhd{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1a1610}
-#imt{font:400 11px/1 Georgia,serif;letter-spacing:.18em;text-transform:uppercase;color:#a8a49c}
-#imc{font-size:16px;color:#302820;cursor:pointer;line-height:1}
-#imc:hover{color:#a8a49c}
-#igrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px;overflow-y:auto}
-.isl{background:#080604;border:1px solid #1a1610;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7px;cursor:pointer;position:relative;transition:border-color .12s}
+#imod{background:#0c0a08;border:1px solid #2a2018;width:min(520px,92vw);max-height:90vh;display:flex;flex-direction:column}
+#imhd{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid #1a1610}
+#imt{font:400 14px/1 Georgia,serif;letter-spacing:.18em;text-transform:uppercase;color:#c8c4bc}
+#imc{font-size:20px;color:#4a4440;cursor:pointer;line-height:1}
+#imc:hover{color:#c8c4bc}
+#igrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px;overflow-y:auto}
+.isl{background:#080604;border:1px solid #1a1610;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;cursor:pointer;position:relative;transition:border-color .12s}
 .isl.full:hover{border-color:#8a2020}
 .isl.empty{opacity:.2;cursor:default}
-.si{font-size:22px;color:#2a2018;margin-bottom:3px;display:block;text-align:center}
-.isl.full .si{color:#8a2020}
-.sn{font:400 7px/1.3 Georgia,serif;color:#302820;text-align:center}
-.isl.full .sn{color:#4a4440}
-.ib2{position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:#8a2020}
-#idet{padding:0 14px 14px}
-#idin{background:#060402;border:1px solid #1a1610;padding:11px 13px;margin-top:10px;min-height:60px}
-.inm{font:400 11px/1 Georgia,serif;color:#a8a49c;margin-bottom:5px}
-.ids{font:400 9px/1.65 Georgia,serif;color:#302820}
-.itg{display:inline-block;font:400 8px/1 Georgia,serif;padding:2px 6px;margin:4px 3px 0 0}
-.itg.key{background:#200808;color:#8a2020}.itg.ev{background:#140824;color:#6b3a8a}
+.si{font-size:28px;color:#2a2018;margin-bottom:4px;display:block;text-align:center}
+.isl.full .si{color:#c23838}
+.si-img{width:48px;height:48px;object-fit:contain;margin-bottom:6px;filter:drop-shadow(0 0 3px #00000080)}
+.sn{font:400 11px/1.3 Georgia,serif;color:#4a4440;text-align:center}
+.isl.full .sn{color:#a8a49c}
+.ib2{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:#8a2020}
+#idet{padding:0 16px 16px}
+#idin{background:#060402;border:1px solid #1a1610;padding:13px 15px;margin-top:12px;min-height:70px}
+.inm{font:400 14px/1 Georgia,serif;color:#c8c4bc;margin-bottom:6px}
+.ids{font:400 12px/1.65 Georgia,serif;color:#8a8580}
+.itg{display:inline-block;font:400 10px/1 Georgia,serif;padding:3px 8px;margin:5px 4px 0 0}
+.itg.key{background:#200808;color:#c23838}.itg.ev{background:#140824;color:#9166c2}
 
 /* ENDING */
 #end{background:#0a0806;text-align:center;padding:50px;justify-content:center}
-#end-in{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:18px;max-width:600px}
-.eti{font:400 clamp(18px,3.5vw,40px)/1.2 Georgia,serif;color:#d3cfc7;letter-spacing:.2em;opacity:0;transition:opacity 1.1s}
+#end-in{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:20px;max-width:680px}
+.eti{font:400 clamp(20px,3.8vw,44px)/1.2 Georgia,serif;color:#d3cfc7;letter-spacing:.2em;opacity:0;transition:opacity 1.1s}
 .eti.show{opacity:1}
 .eru{width:180px;height:1px;background:linear-gradient(to right,transparent,#3a2818,transparent);opacity:0;transition:opacity 1.1s .3s}
 .eru.show{opacity:1}
-.ebo{font:400 13px/2 Georgia,serif;color:#6a6560;opacity:0;transition:opacity 1.1s .5s;white-space:pre-wrap;text-align:center}
+.ebo{font:400 17px/2 Georgia,serif;color:#a8a49c;opacity:0;transition:opacity 1.1s .5s;white-space:pre-wrap;text-align:center}
 .ebo.show{opacity:1}
 /* BAD_1 이미지 — 문구 뒤, 적당한 크기 */
 #end-bad-img{width:min(320px,60vw);border:1px solid #2a2018;opacity:0;transition:opacity 1.1s .65s;display:none;margin:4px 0}
 #end-bad-img.show{opacity:1}
-.est{font:400 11px/1 Georgia,serif;color:#4a4440;letter-spacing:.1em;opacity:0;transition:opacity 1.1s .8s}
+.est{font:700 15px/1 Georgia,serif;color:#8a8580;letter-spacing:.1em;opacity:0;transition:opacity 1.1s .8s}
 .est.show{opacity:1}
-.ers{font:400 10px/1 Georgia,serif;letter-spacing:.18em;text-transform:uppercase;color:#302820;cursor:pointer;opacity:0;transition:opacity 1.1s 1s}
-.ers.show{opacity:1}.ers:hover{color:#6a6560}
+.ers{font:400 13px/1 Georgia,serif;letter-spacing:.18em;text-transform:uppercase;color:#5a5450;cursor:pointer;opacity:0;transition:opacity 1.1s 1s}
+.ers.show{opacity:1}.ers:hover{color:#c8c4bc}
 </style>
 </head>
 <body>
+<div id="frame">
+  <div class="fc fc-tl">&#x2766;</div>
+  <div class="fc fc-tr">&#x2766;</div>
+  <div class="fc fc-bl">&#x2766;</div>
+  <div class="fc fc-br">&#x2766;</div>
+</div>
 <div style="position:relative;width:100vw;height:100vh;overflow:hidden">
 
 <!-- OPENING -->
@@ -162,7 +210,6 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
     <div class="op-div"></div>
     <div class="op-btn" onclick="window.close()">Exit</div>
   </div>
-  <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font:400 13px/1 Georgia,serif;letter-spacing:.18em;color:#888580;text-align:center;white-space:nowrap">25730069 &nbsp;백지원</div>
 </div>
 
 <!-- PROLOGUE -->
@@ -202,24 +249,21 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
           <div class="dot" id="d2"></div><div class="dot" id="d3"></div>
         </div>
         <span id="il">Inventory</span>
-        <span id="ic">0/8</span>
       </div>
     </div>
   </div>
 
   <div id="sc">
     <img id="sc-bg" src="" alt="">
-    <video id="sc-vid" muted playsinline></video>
-    <div id="port">
-      <img id="port-img" src="scene/SNOW.png" alt="Snow">
-      <div id="port-nm">스노우</div>
-    </div>
+    <div id="port" class="port-l"><img id="port-img" src="" alt="" onerror="this.parentElement.classList.remove('show')"></div>
+    <div id="port2" class="port-r"><img id="port-img2" src="" alt="" onerror="this.parentElement.classList.remove('show')"></div>
+    <div id="sc-susglow"></div>
+    <div id="sc-egovig"></div>
+    <div id="sc-flicker"></div>
+    <div id="sc-grain"></div>
+    <div id="sc-vignette"></div>
     <div id="cp">
-      <div id="cp-hdr">&#x2741; 선택 &#x2741;</div>
-      <div id="pv">
-        <div id="pv-ttl">&#x2767; 예상 결과 &#x2767;</div>
-        <div id="pv-body" style="font:italic 10px/1.5 Georgia,serif;color:#2a2018;text-align:center;padding-top:16px">선택지에 커서를 올리세요</div>
-      </div>
+      <div id="cp-hdr">선택</div>
       <div id="cw"></div>
     </div>
   </div>
@@ -230,6 +274,8 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
       <div class="s-ttl">&#x2741; 상태 변화 &#x2741;</div>
       <div class="s-div"></div>
       <div id="srows"></div>
+      <div id="sresult"></div>
+      <div id="sitem"></div>
       <div class="s-nt">잠시 후 다음 장면으로...</div>
     </div>
   </div>
@@ -237,18 +283,18 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
     <div id="imod" onclick="event.stopPropagation()">
       <div id="imhd"><span id="imt">&#x2741; Inventory</span><span id="imc" onclick="toggleInv()">&#x2715;</span></div>
       <div id="igrid"></div>
-      <div id="idet"><div id="idin"><span style="font:italic 10px/1 Georgia,serif;color:#2a2018">아이템을 선택하면 상세 정보가 표시됩니다</span></div></div>
+      <div id="idet"><div id="idin"><span style="font:italic 12px/1 Georgia,serif;color:#5a5450">아이템을 선택하면 상세 정보가 표시됩니다</span></div></div>
     </div>
   </div>
 
   <div id="dlg" onclick="nextLine()">
-    <div id="dlg-sp"></div>
-    <div id="dlg-tx"></div>
+    <div id="dlg-log"></div>
     <div id="dlg-ar">&#x25BC;</div>
   </div>
 </div>
 
 <!-- ENDING -->
+
 <div class="scr" id="end">
   <div id="end-in">
     <div class="eti" id="et"></div>
@@ -267,32 +313,42 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
 
 </div>
 <script>
-var VID={s1:'video/s1.mp4',s2:'video/s2.mp4',s3:'video/s3.mp4',s4:'video/s4.mp4',s5:'video/s5.mp4',s6:'video/s6.mp4',s7:'video/s7.mp4',s8:'video/s8.mp4',s9:'video/s9.mp4',s10:'video/s10.mp4'};
-var IMG={s1:'scene/s1.png',s2:'scene/s2.png',s3:'scene/s3.png',s4:'scene/s4.png',s5:'scene/s5.png',s6:'scene/s6.png',s7:'scene/s7.png',s8:'scene/s8.png',s9:'scene/s9.png',s10:'scene/s10.png',bad1:'scene/BAD_1.png'};
+var IMG={s1:'scene/s1.png',s2:'scene/s2.png',s3:'scene/s3.png',s4:'scene/s4.png',s5:'scene/s5.png',s6:'scene/s6.png',s7:'scene/s7.png',s7skip:'scene/s7.png',s8:'scene/s8.png',s9:'scene/s9.png',s10:'scene/s10.png',bad1:'scene/BAD_1.png'};
+/* 인물별 캐릭터 이미지 — 파일이 추가되면 자동으로 표시됨 */
+var CHAR={
+  '스노우':'scene/SNOW.png',
+  '엘레노어':'scene/ELEANOR.png',
+  '아더':'scene/ARTHUR.png',
+  '헤르만':'scene/HERMAN.png',
+  '그레타':'scene/GRETA.png',
+  '클라라':'scene/CLARA.png',
+  '토마스':'scene/THOMAS.png'
+};
+var charOk={};
 /* narration 있는 씬만 */
 var NAR={s2:'narration/s2.mp3',s5:'narration/s5.mp3',s6:'narration/s6.mp3',s9:'narration/s9.mp3',s10:'narration/s10.mp3'};
 
 var SC=[
-  {id:'s1',vid:true,lines:[
+  {id:'s1',lines:[
     {s:'',t:'폭우가 쏟아지는 밤. 거대한 저택, 화이트하우스.'},
     {s:'엘레노어',t:'"아더 선생님께서 멀리서 오셨어. 우리 가족의 일을 마무리하러."'},
     {s:'스노우',t:"(속으로) '투명하다. 냄새도 없다. 하지만… 침전물.'"},
     {s:'엘레노어',t:'"왜 망설이니? 어서 마시렴. 신경이 날카로워지면 안 되잖아."'},
     {s:'아더',t:'"부인 말씀이 맞소. 긴장을 푸시는 게 좋을 것 같군요, 아가씨."'},
   ],ch:[
-    {k:'A',t:'순응 연기 — 마시는 척 버림',e:-10,su:-20,v:0,d:'마시는 척 버린다. 초반 감시망을 기만하는 데 성공한다.'},
+    {k:'A',t:'순응 연기 — 마시는 척 버림',e:-5,su:-15,v:0,d:'마시는 척 버린다. 초반 감시망을 기만하는 데 성공한다.'},
     {k:'B',t:'단호한 거부 — 잔을 밀침',e:0,su:20,v:0,d:'잔을 밀친다. 저택 내 경계 태세가 발동한다.'},
   ]},
-  {id:'s2',vid:true,lines:[
+  {id:'s2',lines:[
     {s:'',t:'(째깍째깍… 시계 소리만 가득한 침실)'},
     {s:'',t:'(거울 안쪽에서 미세한 발소리)'},
     {s:'스노우',t:'"…누구세요?"'},
     {s:'',t:'(침묵)'},
   ],ch:[
-    {k:'A',t:'인내하며 사각지대 활용',e:15,su:-10,v:0,d:'10분간의 시선 공백을 파악한다. 야간 탐색이 해금된다.',fl:true},
-    {k:'B',t:'거울을 깨며 분노',e:-15,su:30,v:0,d:'거울 파괴. 계모와 헤르만의 밀담이 강제 재생된다.',fl:true},
+    {k:'A',t:'인내하며 사각지대 활용',e:-10,su:-10,v:0,d:'10분간의 시선 공백을 파악한다. 야간 탐색이 해금되고 아버지의 만년필도 함께 손에 넣는다.',fl:true,pen:true},
+    {k:'B',t:'거울을 깨며 분노',e:10,su:25,v:0,d:'거울을 깨부순다. 분노로 자아는 회복되지만 손전등만 챙긴 채 만년필은 놓친다.',fl:true},
   ]},
-  {id:'s3',vid:true,lines:[
+  {id:'s3',lines:[
     {s:'',t:'(복도 끝, 거대한 그림자가 등불을 가린다)'},
     {s:'헤르만',t:'"아가씨, 이 저택의 밤은 위험합니다. 얌전히 방으로 돌아가시지요."'},
     {s:'스노우',t:'"헤르만 씨. 당신은 아버지 때부터 이 집을 지켜온 사람이잖아요."'},
@@ -301,20 +357,20 @@ var SC=[
     {s:'헤르만',t:'(손을 꽉 쥐며) "그만하시오."'},
   ],ch:[
     {k:'A',t:'순순히 무릎 꿇고 후퇴',e:-15,su:-20,v:0,d:'굴욕감에 자아가 깎이지만 헤르만은 경계를 완전히 풀고 의심도가 대폭 감소한다.'},
-    {k:'B',t:'친부의 만년필로 죄책감 자극',e:15,su:-10,v:0,d:"'…감기가 심해지기 전에 들어가십시오.' 리스크 없이 길이 열린다."},
-    {k:'C',t:'토사구팽 가능성 경고',e:20,su:15,v:15,d:"'여왕이 사냥 끝난 사냥꾼을 살려둔 역사는 없어.' 헤르만이 내부 정보를 읊조리고 물러선다."},
+    {k:'B',t:'친부의 만년필로 죄책감 자극',e:15,su:-10,v:0,d:"'…감기가 심해지기 전에 들어가십시오.' 리스크 없이 길이 열린다.",req:'pen'},
+    {k:'C',t:'토사구팽 가능성 경고',e:20,su:15,v:10,d:"'여왕이 사냥 끝난 사냥꾼을 살려둔 역사는 없어.' 헤르만이 내부 정보를 읊조리고 물러선다."},
   ]},
-  {id:'s4',vid:true,lines:[
+  {id:'s4',lines:[
     {s:'',t:'(저녁 냄새 사이로 낯선 냄새가 섞인다)'},
     {s:'스노우',t:"(문틈으로 훔쳐보며 속으로) '그레타. 내 접시에만 저걸 바르고 있어.'"},
     {s:'그레타',t:'(손을 떨며) "미안해요, 아가씨… 저도 어쩔 수가 없어요."'},
     {s:'스노우',t:"(속으로) '아콘티닌. 저 병의 라벨… 독오리나무 추출물이야.'"},
     {s:'그레타',t:'"시키는 대로 안 하면 제가 이 저택에서 쫓겨나 죽어요!"'},
   ],ch:[
-    {k:'A',t:'주방 급습 및 그레타 협박',e:0,su:15,v:20,d:'약병을 확보한다. 동선 지연으로 의심도가 상승한다.'},
-    {k:'B',t:'그냥 넘어가기',e:-30,su:-10,v:0,d:'독이 든 음식을 섭취한다. 무력감으로 자아에 치명상.'},
+    {k:'A',t:'주방 급습 및 그레타 협박',e:0,su:12,v:15,d:'약병을 확보한다. 동선 지연으로 의심도가 상승한다.',poison:true},
+    {k:'B',t:'그냥 넘어가기',e:-20,su:-8,v:0,d:'독이 든 음식을 섭취한다. 무력감으로 자아가 깎인다.'},
   ]},
-  {id:'s5',vid:true,lines:[
+  {id:'s5',lines:[
     {s:'',t:'(문이 잠기는 소리)'},
     {s:'클라라',t:'"주인님의 명령입니다. 협조해 주세요, 아가씨."'},
     {s:'스노우',t:'"명령? 누가 내 방에서 나에게 명령을 해요."'},
@@ -322,10 +378,10 @@ var SC=[
     {s:'스노우',t:'"내 몸에 손대기만 해."'},
     {s:'스노우',t:"(속으로) '증거를 빼앗기면 모든 게 끝이야.'"},
   ],ch:[
-    {k:'A',t:'수색을 묵인하기',e:-20,su:10,v:-20,d:'몸을 웅크려 증거 사수를 시도하지만 일부를 빼앗긴다.'},
-    {k:'B',t:'뺨을 후려치고 내쫓기',e:20,su:30,v:0,d:'물증을 사수하고 주체성을 회복한다. 반란 분자로 찍혀 감시가 폭증한다.'},
+    {k:'A',t:'수색을 묵인하기',e:-15,su:5,v:-15,d:'몸을 웅크려 증거 사수를 시도하지만 일부를 빼앗긴다.'},
+    {k:'B',t:'뺨을 후려치고 내쫓기',e:15,su:30,v:0,d:'물증을 사수하고 주체성을 회복한다. 반란 분자로 찍혀 감시가 폭증한다.'},
   ]},
-  {id:'s6',vid:true,lines:[
+  {id:'s6',lines:[
     {s:'토마스',t:'"아가씨, 오늘은 안색이 좋지 않으시군요. 앉으세요."'},
     {s:'스노우',t:"(가운 주머니에서 반짝이는 것을 포착하며) '저게 뭐지?'"},
     {s:'토마스',t:'"아가씨는 지금 현실과 망상을 혼동하고 계십니다. 치료를 받으시지요."'},
@@ -334,9 +390,10 @@ var SC=[
     {s:'스노우',t:'"제가 여기서 죽으면 과연 선생님께서 무사할까요? 그 잘난 의사 면허마저 사라지면 어떻게 먹고 살거죠?"'},
   ],ch:[
     {k:'A',t:'메스로 자해 위협 — 열쇠 강탈',e:-20,su:20,v:20,d:'메스를 손목에 갖다 댄다. 육탄전 중 열쇠가 바닥에 떨어진다. 발로 밟아 숨기고 메스를 던진다.',gk:true},
-    {k:'B',t:'약물 투여 유도 후 열쇠 탈취',e:-10,su:-10,v:0,d:'주사를 맞는 척 안심시킨 후 정신을 잃는 척하며 열쇠를 은밀히 탈취한다.',gk:true},
+    {k:'B',t:'약물 투여 유도 후 열쇠 탈취',e:-15,su:-10,v:0,d:'주사를 맞는 척 안심시킨 후 정신을 잃는 척하며 열쇠를 은밀히 탈취한다.',gk:true,ev2:20},
+    {k:'C',t:'그냥 넘어가기',e:-10,su:-15,v:0,d:'열쇠를 포기하고 조용히 물러난다. 온실로 가는 길이 막힌다.'},
   ]},
-  {id:'s7',vid:true,lines:[
+  {id:'s7',gate:'KEY',lines:[
     {s:'',t:'(축축한 흙 냄새, 기괴하게 자란 약초들)'},
     {s:'스노우',t:"(숨을 참으며 속으로) '아버지가 생전에 이 온실을 모른다 하셨는데. 지하에 이런 게 있었다니.'"},
     {s:'',t:'(잎사귀 사이로 약병 라벨들이 늘어서 있다)'},
@@ -345,18 +402,26 @@ var SC=[
     {s:'스노우',t:'"부인의 목을 죄어줄 증거를 찾은 것 같아."'},
   ],ch:[
     {k:'A',t:'은밀하게 독초 성분만 채취',e:10,su:0,v:20,d:'치명적인 성분만 잘라 품에 숨긴다. 흔적이 없어 의심도 상승 없음.'},
-    {k:'B',t:'독물 배합 일지 강제 탈취',e:15,su:25,v:35,d:'친필 배합 수첩 확보. 약병 깨지는 소음으로 의심도 폭증.'},
-    {k:'C',t:'온실을 난잡하게 헤집기',e:-20,su:40,v:15,d:'공황 상태로 닥치는 대로 쓸어 담는다. 저택 전체 감시망이 가동된다.'},
+    {k:'B',t:'독물 배합 일지 강제 탈취',e:10,su:20,v:25,d:'친필 배합 수첩 확보. 약병 깨지는 소음으로 의심도가 오른다.',note:true},
+    {k:'C',t:'온실을 헤집어 더 많은 증거 찾기',e:-15,su:30,v:40,d:'공황 상태로 닥치는 대로 쓸어 담는다. 저택 전체 감시망이 가동된다.'},
   ]},
-  {id:'s8',vid:true,lines:[
+  {id:'s7skip',skipFor:'KEY',lines:[
+    {s:'',t:'(온실 문 앞, 자물쇠가 굳게 잠겨 있다)'},
+    {s:'스노우',t:"(속으로) '열쇠가 없어. 여기서 시간을 끌면 안 돼.'"},
+    {s:'',t:'(발소리가 가까워진다. 스노우는 발길을 돌린다)'},
+    {s:'스노우',t:'"…다른 곳을 먼저 찾아야겠어."'},
+  ],ch:[
+    {k:'A',t:'서둘러 정원으로 이동',e:0,su:10,v:0,d:'헤맨 흔적이 남아 의심도가 소폭 오른다. 온실에서 얻었을 물증은 포기해야 한다.'},
+  ]},
+  {id:'s8',lines:[
     {s:'',t:'(폭우. 정원 구석, 늙고 병든 사과나무)'},
     {s:'스노우',t:'(손으로 나무껍질을 짚으며) "기억 속과는 달리 많이 망가져 있네."'},
     {s:'스노우',t:'"잠깐… 이건 뭐지?"'},
   ],ch:[
-    {k:'A',t:'친부와의 기억을 차분히 추적',e:25,su:0,v:0,d:'아버지가 나무 밑동에 만든 비밀 홈에서 서재 금고 마스터키를 발견한다.',gm:true},
-    {k:'B',t:'뿌리 근처를 거칠게 파헤침',e:-10,su:15,v:0,d:'맨손으로 진흙을 파내 마스터키를 획득한다. 헤르만에게 뒤를 밟힌다.',gm:true},
+    {k:'A',t:'친부와의 기억을 차분히 추적',e:20,su:0,v:0,d:'아버지가 나무 밑동에 만든 비밀 홈에서 서재 금고 마스터키를 발견한다.',gm:true},
+    {k:'B',t:'뿌리 근처를 거칠게 파헤침',e:-10,su:15,v:0,d:'맨손으로 진흙을 파내 마스터키를 획득한다. 헤르만에게 뒤를 밟힌다.',gm:false},
   ]},
-  {id:'s9',vid:true,lines:[
+  {id:'s9',gate:'MASTER_KEY',lines:[
     {s:'',t:'(서재 문을 잠그는 소리. 빗물이 마룻바닥에 뚝뚝)'},
     {s:'스노우',t:'"제발… 어디에 맞는 거야, 도대체 어디에! 시간이 없어!"'},
     {s:'',t:'(서랍장, 보석함, 책상… 전부 아니다)'},
@@ -364,10 +429,10 @@ var SC=[
     {s:'',t:'(구석, 먼지 쌓인 흑단나무 상자가 눈에 들어온다)'},
     {s:'스노우',t:'"…이건 어머니의 바느질 상자."'},
   ],ch:[
-    {k:'A',t:'흔적을 지우며 차분히 수색',e:15,su:-10,v:30,d:'빗물과 진흙을 닦아내며 차분히 수색. 흑단나무 상자 이중 바닥에서 진짜 유언장과 물증을 확보한다.'},
-    {k:'B',t:'흔적 방치 무작정 수색',e:-30,su:50,v:0,d:'소음과 발자국으로 엘레노어와 헤르만에게 현행범으로 체포된다.',bad:true},
+    {k:'A',t:'흔적을 지우며 차분히 수색',e:10,su:-10,v:30,d:'빗물과 진흙을 닦아내며 차분히 수색. 흑단나무 상자 이중 바닥에서 진짜 유언장과 물증을 확보한다.'},
+    {k:'B',t:'흔적 방치 무작정 수색',e:0,su:50,v:0,d:'소음과 발자국으로 엘레노어와 헤르만에게 현행범으로 체포된다.',bad:true},
   ]},
-  {id:'s10',vid:true,last:true,lines:[
+  {id:'s10',last:true,lines:[
     {s:'',t:'(새벽 4시. 아더의 객방 문을 두드린다)'},
     {s:'아더',t:'"…스노우 아가씨? 이 새벽에 이게 무슨 무례한 짓입니까! 몸은 왜 그렇게 젖어 있고, 그 눈빛은 또…"'},
     {s:'스노우',t:'(테이블 위에 증거들을 내려놓으며) "읽어보세요. 다 읽으실 때까지 저는 여기 있을 겁니다."'},
@@ -389,6 +454,7 @@ var PR=[
 ];
 
 var ego=80,sus=0,ev=0,inv=[],iopen=false,sci=0,li=0,done=false;
+var flags={};
 var pi=0,pc=0,pt=null,ps=false;
 
 window.onload=function(){
@@ -403,13 +469,9 @@ function startBGM(){
   b.play().catch(function(){});
 }
 
-/* Narration */
+/* Narration — 비활성화: TTS 파일을 적용하지 않기로 함 */
 function playNar(scId){
-  if(!NAR[scId])return;
-  var n=document.getElementById('nar');
-  n.src=NAR[scId];
-  n.volume=1;
-  n.play().catch(function(){});
+  /* 음성 내레이션 재생 안 함 */
 }
 function stopNar(){
   var n=document.getElementById('nar');
@@ -429,7 +491,7 @@ function startPro(){
 }
 function typeN(){
   if(ps)return;
-  if(pi>=PR.length){setTimeout(function(){show('gm');startScene(0);},900);return;}
+  if(pi>=PR.length){setTimeout(function(){show('gm');startScene('s1');},900);return;}
   var p=PR[pi];pc=0;
   document.getElementById('pro-txt').innerHTML='';typeC(p);
 }
@@ -442,57 +504,96 @@ function typeC(p){
     pc++;pt=setTimeout(function(){typeC(p);},('。.!?'.indexOf(c)>=0)?95:26);
   }else{pi++;pt=setTimeout(typeN,pi<PR.length?1000:700);}
 }
-function skipPro(){ps=true;clearTimeout(pt);show('gm');startScene(0);}
+function skipPro(){ps=true;clearTimeout(pt);show('gm');startScene('s1');}
 
 /* SCENE */
-function startScene(idx){
-  sci=idx;li=0;done=false;
-  var sc=SC[idx];
+function findSC(id){
+  for(var i=0;i<SC.length;i++)if(SC[i].id===id)return SC[i];
+  return null;
+}
+function startScene(id){
+  sci=id;li=0;done=false;sceneSpeakers=[];
+  var sc=findSC(id);
   document.getElementById('gm').classList.add('on');
 
   /* narration */
   stopNar();
   playNar(sc.id);
 
-  var vid=document.getElementById('sc-vid');
   var img=document.getElementById('sc-bg');
-  if(sc.vid&&VID[sc.id]){
-    img.style.display='none';
-    vid.style.display='block';
-    vid.loop=false;
-    vid.src=VID[sc.id];
-    vid.load();
-    vid.play().catch(function(){});
-  }else{
-    vid.style.display='none';vid.src='';
-    img.src=IMG[sc.id]||'';img.style.display='block';
-  }
+  img.src=IMG[sc.id]||'';img.style.display='block';
+
   var cp=document.getElementById('cp');
   cp.classList.remove('on');
   cp.style.pointerEvents='';
-  resetPrev();
+  document.getElementById('dlg-log').innerHTML='';
+  document.getElementById('port').classList.remove('show');
+  document.getElementById('port2').classList.remove('show');
   buildCh(sc);
+  applyMoodFX();
   renderLine();
 }
 
+/* 명시적 씬 순서 체인 (게이트 분기 포함) */
+var FLOW={
+  s1:'s2', s2:'s3', s3:'s4', s4:'s5', s5:'s6',
+  s6:function(){return flags.KEY?'s7':'s7skip';},
+  s7:'s8', s7skip:'s8',
+  s8:function(){return flags.MASTER_KEY?'s9':'RE_S9';},
+  s9:'s10', s10:null
+};
+function nextSceneId(curId){
+  var nx=FLOW[curId];
+  if(typeof nx==='function')return nx();
+  return nx;
+}
+
+var sceneSpeakers=[];
 function renderLine(){
-  var sc=SC[sci],l=sc.lines[li];
-  var sp=document.getElementById('dlg-sp');
-  if(l.s){sp.textContent=l.s;sp.classList.add('show');}else{sp.classList.remove('show');}
-  document.getElementById('dlg-tx').textContent=l.t;
-  var port=document.getElementById('port');
-  if(l.s==='스노우')port.classList.add('show');else port.classList.remove('show');
+  var sc=findSC(sci),l=sc.lines[li];
+  var log=document.getElementById('dlg-log');
+  log.innerHTML='';
+  var row=document.createElement('div');
+  row.className='dl-line'+(l.s?'':' narr');
+  var html='';
+  if(l.s)html+='<div class="dl-sp">'+l.s+'</div>';
+  html+='<div class="dl-tx">'+l.t+'</div>';
+  row.innerHTML=html;
+  log.appendChild(row);
+
+  updatePortraits(l.s);
+
   var last=(li===sc.lines.length-1);
-  document.getElementById('dlg-ar').style.color=last?'#9b2222':'#2a2018';
+  document.getElementById('dlg-ar').style.color=last?'#f4f2ee':'#a8a49c';
   if(last&&!done){
     if(sc.ch&&sc.ch.length)document.getElementById('cp').classList.add('on');
     else if(sc.last)setTimeout(ending,1500);
   }
 }
 
+/* 스노우는 항상 왼쪽 고정, 상대 인물은 오른쪽. 말하는 쪽만 강조 */
+function updatePortraits(speaker){
+  var p1=document.getElementById('port'),p2=document.getElementById('port2');
+  var img1=document.getElementById('port-img'),img2=document.getElementById('port-img2');
+  if(!speaker||!CHAR[speaker]){
+    p1.classList.remove('speaking');p2.classList.remove('speaking');
+    return;
+  }
+  if(speaker==='스노우'){
+    if(sceneSpeakers.indexOf('스노우')===-1)sceneSpeakers[0]='스노우';
+  }else{
+    if(sceneSpeakers.indexOf(speaker)===-1)sceneSpeakers[1]=speaker;
+  }
+  if(!sceneSpeakers[0])sceneSpeakers[0]='스노우';
+  if(sceneSpeakers[0]&&CHAR[sceneSpeakers[0]]){img1.src=CHAR[sceneSpeakers[0]];p1.classList.add('show');}
+  if(sceneSpeakers[1]&&CHAR[sceneSpeakers[1]]){img2.src=CHAR[sceneSpeakers[1]];p2.classList.add('show');}
+  p1.classList.toggle('speaking',sceneSpeakers[0]===speaker);
+  p2.classList.toggle('speaking',sceneSpeakers[1]===speaker);
+}
+
 function nextLine(){
   if(done)return;
-  var sc=SC[sci];
+  var sc=findSC(sci);
   var last=(li===sc.lines.length-1);
   if(last&&sc.ch&&sc.ch.length)return;
   if(!last){li++;renderLine();}
@@ -503,28 +604,25 @@ function buildCh(sc){
   var w=document.getElementById('cw');w.innerHTML='';
   if(!sc.ch||!sc.ch.length)return;
   sc.ch.forEach(function(ch){
+    var locked=ch.req&&!flags[ch.req];
     var d=document.createElement('div');
-    d.className='cb';
-    d.innerHTML='<div class="cb-r"><span class="ck">['+ch.k+']</span><span class="ct">'+ch.t+'</span></div>';
-    d.addEventListener('mouseenter',function(){showPrev(ch);});
-    d.addEventListener('mouseleave',resetPrev);
-    d.addEventListener('click',function(e){e.stopPropagation();pick(d,ch);});
+    d.className='cb'+(locked?' locked':'');
+    d.innerHTML='<div class="cb-r"><span class="ck">['+ch.k+']</span><span class="ct">'+ch.t+(locked?' <span class="cb-lock">(만년필 필요)</span>':'')+'</span></div>';
+    if(!locked){
+      d.addEventListener('click',function(e){e.stopPropagation();pick(d,ch);});
+    }
     w.appendChild(d);
   });
 }
-function showPrev(ch){
-  var rows=[['자아',ch.e],['의심도',ch.su],['물증',ch.v]].map(function(x){
-    var nm=x[0],v=x[1];
-    var sym=v>0?'▲':v<0?'▼':'—';
-    var cls=v>0?'pos':v<0?'neg':'zer';
-    var txt=v===0?'변동 없음':(v>0?'+':'')+v;
-    return '<div class="pr"><span class="pn">'+nm+'</span><span class="pa">'+sym+'</span><span class="pc '+cls+'">'+txt+'</span></div>';
-  }).join('');
-  document.getElementById('pv-body').innerHTML=rows+'<div class="pd">'+ch.d+'</div>';
-}
-function resetPrev(){
-  document.getElementById('pv-body').innerHTML='<div style="font:italic 10px/1.5 Georgia,serif;color:#2a2018;text-align:center;padding-top:16px">선택지에 커서를 올리세요</div>';
-}
+/* 아이템 마스터 데이터 — item 폴더의 이미지 사용 */
+var ITEMS={
+  lantern:{name:'랜턴',img:'item/lantern.png',tags:[{c:'ev',t:'탐색도구'}],desc:'야간 탐색을 가능하게 하는 랜턴.'},
+  pen:{name:'아버지의 만년필',img:'item/pen.png',tags:[{c:'ev',t:'유품'}],desc:'헤르만의 죄책감을 자극할 수 있는 아버지의 유품.'},
+  poison:{name:'독약',img:'item/poisen.png',tags:[{c:'ev',t:'물증'}],desc:'그레타가 음식에 바르던 독극물 약병. 아콘티닌 성분이 검출된다.'},
+  key1:{name:'온실 열쇠',img:'item/key1.png',tags:[{c:'key',t:'열쇠'}],desc:'온실 지하실로 이어지는 철제 열쇠.'},
+  key2:{name:'마스터키',img:'item/key2.png',tags:[{c:'key',t:'마스터키'}],desc:'사과나무 밑동에 숨겨진 아버지의 금고 열쇠.'},
+  note:{name:'독초 수집일지',img:'item/note.png',tags:[{c:'ev',t:'물증'}],desc:'엘레노어의 친필로 적힌 독초 배합 기록.'}
+};
 function pick(el,ch){
   if(done)return;
   done=true;
@@ -535,20 +633,28 @@ function pick(el,ch){
   ego=Math.min(100,Math.max(0,ego+(ch.e!==undefined?ch.e:0)));
   sus=Math.min(100,Math.max(0,sus+(ch.su!==undefined?ch.su:0)));
   ev=Math.min(100,Math.max(0,ev+(ch.v!==undefined?ch.v:0)));
-  if(ch.fl)addItem({name:'손전등',icon:'🔦',badge:true,tags:[{c:'ev',t:'탐색도구'}],desc:'야간 탐색을 가능하게 하는 손전등.'});
-  if(ch.gk)addItem({name:'온실 열쇠',icon:'🗝',badge:false,tags:[{c:'key',t:'열쇠'}],desc:'온실 지하실로 이어지는 철제 열쇠.'});
-  if(ch.gm)addItem({name:'서재 마스터키',icon:'🔑',badge:false,tags:[{c:'key',t:'마스터키'}],desc:'사과나무 밑동에 숨겨진 아버지의 금고 열쇠.'});
-  statOv(prev,function(){
-    if(ch.bad){badEnd();return;}
-    var ni=sci+1;
-    if(ni>=SC.length){ending();return;}
-    startScene(ni);
+  if(ch.ev2)ev=Math.min(100,ev+ch.ev2);
+  var gained=[];
+  if(ch.fl){addItem('lantern');gained.push('lantern');}
+  if(ch.pen){flags.pen=true;addItem('pen');gained.push('pen');}
+  if(ch.poison){addItem('poison');gained.push('poison');}
+  if(ch.note){addItem('note');gained.push('note');}
+  if(ch.gk!==undefined){flags.KEY=ch.gk;if(ch.gk){addItem('key1');gained.push('key1');}}
+  if(ch.gm!==undefined){flags.MASTER_KEY=ch.gm;if(ch.gm){addItem('key2');gained.push('key2');}}
+  statOv(prev,ch.d,gained,function(){
+    if(ch.bad){badEnd('arrest');return;}
+    if(sus>=100){badEnd('arrest');return;}
+    if(ego<=0){badEnd('madness');return;}
+    var nid=nextSceneId(sci);
+    if(nid==='RE_S9'){badEnd('arrest');return;}
+    if(nid===null){ending();return;}
+    startScene(nid);
   });
 }
-function addItem(it){if(inv.length<8){inv.push(it);updStats();}}
+function addItem(key){if(inv.length<8){inv.push(key);updStats();}}
 
 /* STAT OVERLAY */
-function statOv(prev,cb){
+function statOv(prev,resultText,gained,cb){
   var ov=document.getElementById('sov');
   var rw=document.getElementById('srows');rw.innerHTML='';
   [['자아',prev.e,ego],['의심도',prev.su,sus],['물증',prev.v,ev]].forEach(function(x){
@@ -558,16 +664,31 @@ function statOv(prev,cb){
     var dsp=df===0?'—':(df>0?'+':'')+df;
     rw.innerHTML+='<div class="s-row"><span class="s-ic">'+ic+'</span><span class="s-nm">'+nm+'</span><span class="s-ch '+cls+'">'+dsp+'</span></div>';
   });
+  document.getElementById('sresult').textContent=resultText||'';
+  var itemBox=document.getElementById('sitem');itemBox.innerHTML='';
+  (gained||[]).forEach(function(key){
+    var it=ITEMS[key];if(!it)return;
+    itemBox.innerHTML+='<div class="sit-row"><img class="sit-img" src="'+it.img+'" alt=""><div class="sit-tx"><span class="sit-lbl">아이템 획득</span><span class="sit-nm">'+it.name+'</span></div></div>';
+  });
   updStats();
   ov.classList.add('on');
-  setTimeout(function(){ov.classList.remove('on');setTimeout(function(){cb();},320);},1800);
+  var holdTime=1800+((gained&&gained.length)?700:0);
+  setTimeout(function(){ov.classList.remove('on');setTimeout(function(){cb();},320);},holdTime);
 }
 
 /* ENDINGS */
-function badEnd(){
+function badEnd(type){
   stopNar();
-  document.getElementById('et').textContent='영원히 닫힌 방';
-  document.getElementById('eb').textContent='스노우는 현장에서 붙잡혀 아버지의 열쇠를 빼앗깁니다.\n다음 날 아침 청문회는 구경도 못한 채 중증 광기 환자로 확정되어\n저택 지하 깊은 독방에 영원히 구금됩니다.';
+  var t,b;
+  if(type==='madness'){
+    t='무너진 자아';
+    b='끝없는 압박과 가스라이팅 속에서 스노우의 정신은 결국 버티지 못합니다.\n발견된 그녀는 더 이상 자신을 변호할 수 없는 상태였고,\n엘레노어는 손쉽게 모든 것을 손에 넣습니다.\n스노우는 저택 지하 깊은 독방에 영원히 구금됩니다.';
+  }else{
+    t='영원히 닫힌 방';
+    b='스노우는 현장에서 붙잡혀 아버지의 열쇠를 빼앗깁니다.\n다음 날 아침 청문회는 구경도 못한 채 중증 광기 환자로 확정되어\n저택 지하 깊은 독방에 영원히 구금됩니다.';
+  }
+  document.getElementById('et').textContent=t;
+  document.getElementById('eb').textContent=b;
   document.getElementById('es').textContent='자아 '+Math.round(ego)+' · 물증 '+Math.round(ev)+' · 의심도 '+Math.round(sus);
   var badImg=document.getElementById('end-bad-img');
   badImg.style.display='block';
@@ -589,15 +710,21 @@ function ending(){
   var t,b;
   var badImg=document.getElementById('end-bad-img');
   badImg.style.display='none';
-  if(ev>=30&&ego>=60&&sus<50){
+  if(ego>=55&&sus<55&&ev>=65){
     t='진 엔딩: 되찾은 집';
     b='아침 만찬장, 엘레노어가 승리를 확신하는 순간\n아더 판사가 경찰들과 함께 진짜 유언장을 공개합니다.\n엘레노어와 헤르만은 체포되고,\n스노우는 저택의 정당한 상속권자가 되어 새 삶을 되찾습니다.';
-  }else if(ego<30&&ev>=60){
+  }else if(ego>=55&&sus<55&&ev>=40){
+    t='불완전한 승리';
+    b='아더 판사가 재판을 뒤집는 데는 성공하지만,\n증거가 충분치 않아 엘레노어는 일부 혐의만 인정받습니다.\n스노우는 저택을 되찾지만,\n완전한 정의는 끝내 이루어지지 않았습니다.';
+  }else if(ego<35&&ev>=55){
     t='피카레스크 엔딩: 독을 품은 백설공주';
     b='엘레노어는 몰락했지만,\n오랜 가스라이팅으로 스노우의 정신 역시 피폐해졌습니다.\n스노우는 저택의 주인이 된 후,\n엘레노어가 하던 방식 그대로 공포로 지배하는 주인이 되어버립니다.';
+  }else if(flags.KEY===false&&ev<40){
+    t='도망자 엔딩';
+    b='결정적 물증을 모으지 못한 채 재판은 엘레노어의 승리로 끝납니다.\n하지만 체포까지는 면한 스노우는 한밤중 저택을 빠져나와,\n이름도 신분도 버린 도망자로 새로운 삶을 시작합니다.\n이긴 것도, 완전히 진 것도 아닌 결말입니다.';
   }else{
     t='배드 엔딩: 닫혀버린 방';
-    b='아더 판사는 스노우의 증거를 묵살합니다.\n결국 엘레노어의 뜻대로 유언장은 영원히 묻히고,\n스노우는 정신병원 독방으로 강제 이송됩니다.';
+    b='아더 판사는 스노우의 증거를 묵살합니다.\n결국 엘레노어의 뜻대로 유언장은 영원히 묻히고,\n스노우는 정신병원 독방으로 강제 이송됩니다.\n당신은 처음부터 이 저택의 주인이 아니었습니다.';
   }
   document.getElementById('et').textContent=t;
   document.getElementById('eb').textContent=b;
@@ -609,13 +736,14 @@ function ending(){
 }
 
 function restart(){
-  ego=80;sus=0;ev=0;inv=[];iopen=false;sci=0;li=0;done=false;
+  ego=80;sus=0;ev=0;inv=[];iopen=false;sci='s1';li=0;done=false;flags={};
   stopNar();
   ['et','er','eb','es','eres'].forEach(function(id){document.getElementById(id).classList.remove('show');});
   var badImg=document.getElementById('end-bad-img');
   badImg.classList.remove('show');badImg.style.display='none';
   document.getElementById('op-title').classList.remove('show');
   document.getElementById('op-menu').classList.remove('show');
+  clearMoodFX();
   updStats();show('op');
   setTimeout(function(){document.getElementById('op-title').classList.add('show');},300);
   setTimeout(function(){document.getElementById('op-menu').classList.add('show');},800);
@@ -627,17 +755,17 @@ function invOut(e){if(e.target===document.getElementById('inv'))toggleInv();}
 function buildGrid(){
   var g=document.getElementById('igrid');g.innerHTML='';
   for(var i=0;i<8;i++){
-    var sl=document.createElement('div'),it=inv[i];
+    var sl=document.createElement('div'),key=inv[i],it=key?ITEMS[key]:null;
     if(it){
       sl.className='isl full';
-      sl.innerHTML='<span class="si">'+it.icon+'</span><span class="sn">'+it.name+'</span>'+(it.badge?'<div class="ib2"></div>':'');
+      sl.innerHTML='<img class="si-img" src="'+it.img+'" alt=""><span class="sn">'+it.name+'</span>';
       (function(idx){sl.onclick=function(){detItem(idx);};})(i);
-    }else{sl.className='isl empty';sl.innerHTML='<span class="si" style="opacity:.1">□</span><span class="sn">빈 슬롯</span>';}
+    }else{sl.className='isl empty';sl.innerHTML='<span class="si" style="opacity:.1">&#x25A1;</span><span class="sn">빈 슬롯</span>';}
     g.appendChild(sl);
   }
 }
 function detItem(i){
-  var it=inv[i];if(!it)return;
+  var key=inv[i],it=key?ITEMS[key]:null;if(!it)return;
   var tags=(it.tags||[]).map(function(t){return '<span class="itg '+t.c+'">'+t.t+'</span>';}).join('');
   document.getElementById('idin').innerHTML='<div class="inm">'+it.name+'</div><div class="ids">'+it.desc+'</div>'+tags;
   document.querySelectorAll('.isl.full').forEach(function(s,j){s.style.borderColor=j===i?'#8a2020':'';});
@@ -649,8 +777,38 @@ function updStats(){
   document.getElementById('ve').textContent=Math.round(ego);
   document.getElementById('vs').textContent=Math.round(sus);
   document.getElementById('vv').textContent=Math.round(ev);
-  document.getElementById('ic').textContent=inv.length+'/8';
   for(var i=0;i<4;i++)document.getElementById('d'+i).className='dot'+(i<inv.length?' on':'');
+  applyMoodFX();
+}
+
+/* 상태 기반 연출: 의심도 → 붉은 글로우+흔들림, 자아 → 검은 비네팅 강화+불안정한 떨림 */
+function applyMoodFX(){
+  var sc=document.getElementById('sc');
+  var glow=document.getElementById('sc-susglow');
+  var egovig=document.getElementById('sc-egovig');
+  if(!sc||!glow||!egovig)return;
+  var s=Math.max(0,Math.min(100,sus));
+  var glowA=Math.min(.55,(s/100)*.55);
+  glow.style.setProperty('--sus-a',glowA.toFixed(3));
+
+  var e=Math.max(0,Math.min(100,ego));
+  var deficit=Math.max(0,(50-e)/50);
+  var vigA=Math.min(.78,deficit*.78);
+  var vigR=70-deficit*40;
+  egovig.style.setProperty('--ego-a',vigA.toFixed(3));
+  egovig.style.setProperty('--ego-r',vigR.toFixed(1)+'%');
+
+  sc.classList.toggle('ego-tremor-crit',e<=20);
+  sc.classList.toggle('ego-tremor',e>20&&e<=45);
+  sc.classList.toggle('sus-shake',s>=70&&e>20);
+}
+function clearMoodFX(){
+  var sc=document.getElementById('sc');
+  var glow=document.getElementById('sc-susglow');
+  var egovig=document.getElementById('sc-egovig');
+  if(sc)sc.classList.remove('sus-shake','ego-tremor','ego-tremor-crit');
+  if(glow)glow.style.setProperty('--sus-a','0');
+  if(egovig){egovig.style.setProperty('--ego-a','0');egovig.style.setProperty('--ego-r','70%');}
 }
 updStats();
 </script>
