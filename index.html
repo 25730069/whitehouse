@@ -142,7 +142,7 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
 #scard::before{content:'❧';position:absolute;top:8px;left:50%;transform:translateX(-50%);color:#3a2818;font-size:18px}
 #scard::after{content:'❧';position:absolute;bottom:8px;left:50%;transform:translateX(-50%) rotate(180deg);color:#3a2818;font-size:18px}
 .s-ttl{font:400 13px/1 Georgia,serif;letter-spacing:.2em;text-transform:uppercase;color:#8a8580}
-.s-div{width:150px;height:1px;background:linear-gradient(to right,transparent,#3a2818,transparent)}
+.s-div"></div>
 .s-row{display:flex;align-items:center;gap:12px;width:100%}
 .s-ic{font-size:16px;color:#a8a49c;min-width:18px;text-align:center}
 .s-nm{font:400 16px/1 Georgia,serif;color:#a8a49c;flex:1}
@@ -202,23 +202,22 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
 </div>
 <div style="position:relative;width:100vw;height:100vh;overflow:hidden">
 
-<!-- OPENING -->
 <div class="scr on" id="op">
   <div id="op-title">White House</div>
   <div id="op-menu">
+    <div style="font:italic 400 14px/1 Georgia,serif; letter-spacing:0.15em; color:#6a6560; margin-bottom:12px; text-transform:uppercase;">25730069 백지원</div>
+    <div class="op-div" style="margin-bottom:14px;"></div>
     <div class="op-btn" onclick="startPro()">Start</div>
     <div class="op-div"></div>
     <div class="op-btn" onclick="window.close()">Exit</div>
   </div>
 </div>
 
-<!-- PROLOGUE -->
 <div class="scr" id="pro">
   <div id="pro-txt"></div><span id="pro-cur"></span>
   <div id="pro-skip" onclick="skipPro()">Skip &#9654;</div>
 </div>
 
-<!-- GAME -->
 <div class="scr" id="gm">
   <div id="hud">
     <div class="hl"><span class="hl-title">WHITE HOUSE</span></div>
@@ -268,7 +267,6 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
     </div>
   </div>
 
-  <!-- overlays at gm level -->
   <div id="sov">
     <div id="scard">
       <div class="s-ttl">&#x2741; 상태 변화 &#x2741;</div>
@@ -293,8 +291,6 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
   </div>
 </div>
 
-<!-- ENDING -->
-
 <div class="scr" id="end">
   <div id="end-in">
     <div class="eti" id="et"></div>
@@ -306,9 +302,7 @@ html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Ge
   </div>
 </div>
 
-<!-- BGM -->
 <audio id="bgm" src="music/music.mp3" loop></audio>
-<!-- Narration -->
 <audio id="nar"></audio>
 
 </div>
@@ -429,7 +423,7 @@ var SC=[
     {s:'',t:'(구석, 먼지 쌓인 흑단나무 상자가 눈에 들어온다)'},
     {s:'스노우',t:'"…이건 어머니의 바느질 상자."'},
   ],ch:[
-    {k:'A',t:'흔적을 지우며 차분히 수색',e:10,su:-10,v:30,d:'빗물과 진흙을 닦아내며 차분히 수색. 흑단나무 상자 이중 바닥에서 진짜 유언장과 물증을 확보한다.'},
+    {k:'A',t:'흔적을 지우며 차분히 수색',e:10,su:-10,v:30,d:'빗물 wagons 진흙을 닦아내며 차분히 수색. 흑단나무 상자 이중 바닥에서 진짜 유언장과 물증을 확보한다.'},
     {k:'B',t:'흔적 방치 무작정 수색',e:0,su:50,v:0,d:'소음과 발자국으로 엘레노어와 헤르만에게 현행범으로 체포된다.',bad:true},
   ]},
   {id:'s10',last:true,lines:[
